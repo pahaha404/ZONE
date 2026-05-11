@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZONE Signal Atlas</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
+
+    :root {
+      --bg: #eef5f2;
+      --card: #fbfffd;
+      --ink: #0f1c1a;
+      --muted: #56706a;
+      --line: #cfe0da;
+      --teal: #107b73;
+      --blue: #1f5bd8;
+      --gold: #ca8c2e;
+      --shadow: 0 18px 50px rgba(15, 28, 26, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(160deg, rgba(16, 123, 115, 0.12), transparent 25%),
+        linear-gradient(320deg, rgba(31, 91, 216, 0.08), transparent 28%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Sora", sans-serif;
+    }
+
+    .wrap { max-width: 1320px; margin: 0 auto; padding: 28px 24px 72px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 6vw, 70px);
+      line-height: 0.94;
+      max-width: 780px;
+    }
+
+    .lede {
+      max-width: 460px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(251, 255, 253, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .small { grid-column: span 3; }
+    .medium { grid-column: span 4; }
+    .wide { grid-column: span 6; }
+    .full { grid-column: span 12; }
+
+    .kicker {
+      font-family: "JetBrains Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+
+    h2, h3 { margin: 0; }
+    p { margin: 10px 0 0; color: var(--muted); line-height: 1.65; }
+
+    .rail {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .entry {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid #dbe8e3;
+      background: #ffffff;
+    }
+
+    .token {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .token.teal { background: rgba(16, 123, 115, 0.12); color: var(--teal); }
+    .token.blue { background: rgba(31, 91, 216, 0.10); color: var(--blue); }
+    .token.gold { background: rgba(202, 140, 46, 0.12); color: var(--gold); }
+
+    .monitor {
+      min-height: 360px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(12, 21, 20, 0.06), rgba(12, 21, 20, 0.28)),
+        linear-gradient(135deg, #d8eee8, #7aa197 55%, #25413d);
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      color: #f8fffd;
+    }
+
+    .readout {
+      position: absolute;
+      inset: auto 22px 22px 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .readout .cell {
+      background: rgba(12, 21, 20, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      padding: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .value {
+      display: block;
+      font-size: 28px;
+      margin-top: 8px;
+      color: #ffffff;
+    }
+
+    @media (max-width: 980px) {
+      .header { flex-direction: column; }
+      .small, .medium, .wide, .full { grid-column: span 12; }
+      .readout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <div>
+        <p class="kicker">Concept 03 / Signal Atlas</p>
+        <h1>A cleaner, analytical direction for users who respond to measured performance.</h1>
+      </div>
+      <p class="lede">
+        This concept leans into live signal confidence, thresholds, and outcome metrics. It is still consumer-facing,
+        but it makes the product feel credible and system-driven.
+      </p>
+    </header>
+
+    <section class="board">
+      <article class="card medium">
+        <p class="kicker">Library</p>
+        <h2>Imported queue</h2>
+        <div class="rail">
+          <div class="entry"><span>Discrete Math Crash Review</span><span class="token teal">Ready</span></div>
+          <div class="entry"><span>Database Systems Week 09</span><span class="token blue">Recent</span></div>
+          <div class="entry"><span>Compiler Theory Notes</span><span class="token gold">Long form</span></div>
+        </div>
+      </article>
+
+      <article class="card small">
+        <p class="kicker">Calibration</p>
+        <h2>Baseline capture</h2>
+        <p>Quaternion, face box, and head pose stored before the monitored run begins.</p>
+      </article>
+
+      <article class="card small">
+        <p class="kicker">Strictness</p>
+        <h2>Standard</h2>
+        <p>Moderate thresholds, visible warnings, and a clear recovery path.</p>
+      </article>
+
+      <article class="card wide">
+        <p class="kicker">Live session</p>
+        <div class="monitor">
+          <span class="token gold">Attention drift / recovery required</span>
+          <h2 style="margin-top:18px; max-width:420px;">The player should feel live, supervised, and impossible to ignore.</h2>
+          <div class="readout">
+            <div class="cell">
+              <div class="kicker" style="color:rgba(255,255,255,0.68); margin:0;">Face status</div>
+              <span class="value">Lost</span>
+            </div>
+            <div class="cell">
+              <div class="kicker" style="color:rgba(255,255,255,0.68); margin:0;">Recovery</div>
+              <span class="value">2.5s</span>
+            </div>
+            <div class="cell">
+              <div class="kicker" style="color:rgba(255,255,255,0.68); margin:0;">Movement</div>
+              <span class="value">Low</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card full">
+        <p class="kicker">Report</p>
+        <h2>Metrics first, excuses second.</h2>
+        <div class="rail">
+          <div class="entry"><span>Focus score</span><strong>84 / 100</strong></div>
+          <div class="entry"><span>Actual playback</span><strong>52m 41s</strong></div>
+          <div class="entry"><span>Attention violations</span><strong>5</strong></div>
+          <div class="entry"><span>Movement violations</span><strong>3</strong></div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

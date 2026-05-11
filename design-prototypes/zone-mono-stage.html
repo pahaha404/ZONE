@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZONE Mono Stage</title>
+  <style>
+    :root {
+      --bg: #030303;
+      --panel: #0e0e11;
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #f5f5f7;
+      --muted: #a0a1a8;
+      --pill: rgba(255, 255, 255, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, #090909 0%, #030303 100%);
+    }
+
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 56px 28px 90px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 34px;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(52px, 8vw, 104px);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      margin: 24px 0 0;
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.8;
+    }
+
+    .summary {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: 28px;
+    }
+
+    .summary h2 {
+      margin: 0 0 12px;
+      font-size: 28px;
+    }
+
+    .summary ul {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .summary li {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
+    .phone-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: end;
+    }
+
+    .phone {
+      background: linear-gradient(180deg, #18181d 0%, #0a0a0d 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 42px;
+      padding: 14px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    .screen {
+      min-height: 760px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .notch {
+      width: 136px;
+      height: 28px;
+      border-radius: 999px;
+      background: #030303;
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+    }
+
+    .status-top {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .brand {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .pill {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--pill);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      backdrop-filter: blur(18px);
+    }
+
+    .library-shot {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.82)),
+        radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.3), transparent 10%),
+        radial-gradient(circle at 74% 26%, rgba(255, 255, 255, 0.2), transparent 12%),
+        linear-gradient(135deg, #3a3f4a, #191b21 34%, #0a0a0d 68%, #1c2433);
+    }
+
+    .content-bottom {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 24px;
+      z-index: 3;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 36px;
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+
+    .sub {
+      margin: 14px 0 0;
+      color: #d6d6da;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 12px;
+    }
+
+    .session-shot {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 32%, transparent 58%, rgba(0, 0, 0, 0.78)),
+        radial-gradient(circle at 40% 36%, rgba(87, 116, 255, 0.22), transparent 24%),
+        linear-gradient(130deg, #1d1f28, #050505 52%, #141826);
+    }
+
+    .video-frame {
+      position: absolute;
+      inset: 112px 24px 168px;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+        linear-gradient(135deg, #333840, #121319 44%, #080808);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .overlay-card {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 28px;
+      border-radius: 28px;
+      background: rgba(11, 12, 18, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 22px;
+      backdrop-filter: blur(22px);
+    }
+
+    .overlay-card h3 {
+      margin: 10px 0 8px;
+      font-size: 32px;
+      letter-spacing: -0.05em;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #fff;
+      color: #030303;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .report-shot {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, #11131a 0%, #050505 60%);
+      padding: 100px 22px 24px;
+    }
+
+    .report-card {
+      padding: 18px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 14px;
+    }
+
+    .report-card h4 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .score {
+      font-size: 72px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ffffff, #8e9aff);
+    }
+
+    .screen-label {
+      margin-top: 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .phone-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screen {
+        min-height: 700px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Concept 01</p>
+        <h1>Mono Stage</h1>
+        <p class="lead">
+          Apple 리소스 페이지처럼 검은 바탕과 큰 글자를 전면에 두되, ZONE 앱답게 실제 플레이어 화면을
+          거의 포스터처럼 보여 주는 방향입니다. 브랜드 인상이 가장 강하고, 하나의 세션에 몰아넣는 힘이 큽니다.
+        </p>
+      </div>
+      <aside class="summary">
+        <h2>핵심 포인트</h2>
+        <ul>
+          <li>큰 타이포와 단일 영상 프레임으로 집중 장치를 강화</li>
+          <li>상태 정보는 최소한의 pill 로만 노출해 시선 분산 최소화</li>
+          <li>기준 자세 측정과 재보정도 하나의 무대처럼 통일된 톤 유지</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="phone-grid">
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="library-shot"></div>
+            <div class="status-top">
+              <span class="pill">ZONE</span>
+              <span class="pill">영상 12개</span>
+            </div>
+            <div class="content-bottom">
+              <p class="title">영상에만 남습니다.</p>
+              <p class="sub">로컬 영상만 불러와 세션을 시작합니다. 한번 재생되면 얼굴 방향과 기기 안정성이 계속 확인됩니다.</p>
+              <div class="chip-row">
+                <span class="chip">로컬 파일</span>
+                <span class="chip">탭해서 시작</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">라이브러리 화면</div>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="session-shot"></div>
+            <div class="status-top">
+              <span class="brand">ZONE.</span>
+              <span class="pill">24초</span>
+            </div>
+            <div class="video-frame"></div>
+            <div class="overlay-card">
+              <span class="pill">재생 일시정지</span>
+              <h3>화면을 바라봐 주세요.</h3>
+              <p class="sub">정면을 보고 2.5초 동안 자세를 유지하면 자동으로 다시 재생됩니다.</p>
+              <span class="button">다시 보정하기</span>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">강제 시청 화면</div>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="screen">
+            <div class="notch"></div>
+            <div class="report-shot">
+              <div class="report-card">
+                <div class="pill">세션 리포트</div>
+                <div class="score">92</div>
+                <p class="sub">움직임 1회 · 집중 이탈 0회 · 완주율 100%</p>
+              </div>
+              <div class="report-card">
+                <h4>집중 그래프</h4>
+                <p class="sub">집중 점수</p>
+                <div class="bar"><span style="width:92%"></span></div>
+                <p class="sub">시선 유지</p>
+                <div class="bar"><span style="width:96%"></span></div>
+              </div>
+              <div class="report-card">
+                <h4>세션 목표</h4>
+                <p class="sub">20분 동안 영상 끝까지 보기</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-label">리포트 화면</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

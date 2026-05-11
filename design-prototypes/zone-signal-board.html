@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZONE Signal Board</title>
+  <style>
+    :root {
+      --bg: #040404;
+      --panel: #101114;
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #f7f7f8;
+      --muted: #a8a8b3;
+      --accent: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 24%),
+        linear-gradient(180deg, #080808 0%, #040404 48%, #020202 100%);
+      color: var(--text);
+    }
+
+    .wrap {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 56px 28px 92px;
+    }
+
+    .hero {
+      text-align: center;
+      max-width: 1080px;
+      margin: 0 auto 44px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(54px, 8vw, 104px);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      margin: 22px auto 0;
+      max-width: 900px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 19px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 0.95fr 1.15fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .phone {
+      border-radius: 42px;
+      padding: 14px;
+      background: linear-gradient(180deg, #17171b, #08080a);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 82px rgba(0, 0, 0, 0.5);
+    }
+
+    .screen {
+      min-height: 780px;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(180deg, #0f1116 0%, #040404 66%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 96px 20px 22px;
+    }
+
+    .notch {
+      width: 136px;
+      height: 28px;
+      border-radius: 999px;
+      background: #050505;
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .topbar {
+      position: absolute;
+      top: 26px;
+      left: 22px;
+      right: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .pill {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      padding: 18px;
+    }
+
+    .card h2,
+    .card h3,
+    .card h4 {
+      margin: 0;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-stat {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .score {
+      font-size: 78px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .meta {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 8px;
+      font-size: 15px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-card {
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .mini-card span {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .bar-wrap {
+      margin-top: 14px;
+    }
+
+    .bar-head {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .bar {
+      height: 11px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #ffffff, #8f97ff);
+    }
+
+    .log {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .log-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .matrix {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      padding: 28px;
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--line);
+    }
+
+    .panel h2 {
+      font-size: 36px;
+      margin: 0 0 14px;
+      letter-spacing: -0.05em;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .screen-flow {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .screen-tile {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .screen-tile h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+    }
+
+    .screen-tile small {
+      color: var(--muted);
+      line-height: 1.7;
+      display: block;
+    }
+
+    .quote {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-left: 2px solid rgba(255, 255, 255, 0.32);
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1100px) {
+      .board,
+      .screen-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .screen {
+        min-height: 720px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Concept 03</p>
+      <h1>Signal Board</h1>
+      <p class="lead">
+        리포트와 로컬 랭킹을 제품 차별점으로 끌어올리는 방향입니다.
+        ZONE이 단순 차단 앱이 아니라, 세션 데이터를 남기고 읽게 만드는 집중 기록 도구처럼 보이도록 설계했습니다.
+      </p>
+    </section>
+
+    <section class="board">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="topbar">
+            <div class="brand">ZONE.</div>
+            <div class="pill">리포트</div>
+          </div>
+
+          <div class="stack">
+            <div class="card">
+              <div class="pill">오늘의 세션</div>
+              <div class="score">94</div>
+              <p class="meta">20분 완주 · 움직임 1회 · 집중 이탈 0회</p>
+            </div>
+
+            <div class="hero-stat">
+              <div class="mini-card">
+                <strong>로컬 순위</strong>
+                <span>2위</span>
+              </div>
+              <div class="mini-card">
+                <strong>평균 안정 구간</strong>
+                <span>4.8초</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>집중 그래프</h3>
+              <div class="bar-wrap">
+                <div class="bar-head"><b>집중 점수</b><b>94%</b></div>
+                <div class="bar"><span style="width:94%"></span></div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar-head"><b>완주율</b><b>100%</b></div>
+                <div class="bar"><span style="width:100%"></span></div>
+              </div>
+              <div class="bar-wrap">
+                <div class="bar-head"><b>움직임 제어</b><b>88%</b></div>
+                <div class="bar"><span style="width:88%"></span></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h4>이벤트 기록</h4>
+              <div class="log">
+                <div class="log-item"><span>시작</span><span>목표: 끝까지 보기</span></div>
+                <div class="log-item"><span>경고</span><span>휴대폰을 고정해 주세요</span></div>
+                <div class="log-item"><span>완료</span><span>영상 시청 완료</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="matrix">
+        <div class="panel">
+          <h2>왜 이 방향이 맞는가</h2>
+          <p>
+            ZONE은 시청을 강제하는 순간만 중요한 앱이 아닙니다. 사용자가 세션 결과를 다시 보고,
+            다음 영상에서도 스스로 더 높은 점수를 노리게 만드는 구조까지 설계해야 앱이 살아남습니다.
+          </p>
+          <div class="quote">
+            "강제 시청 경험"과 "집중 기록 경험"이 하나의 브랜드로 이어져야 사용자가 앱을 계속 열게 됩니다.
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>앱 흐름 구성</h2>
+          <div class="screen-flow">
+            <div class="screen-tile">
+              <h3>라이브러리</h3>
+              <small>오늘 볼 영상과 이전 기록을 함께 노출해 다시 세션을 시작하게 만듭니다.</small>
+            </div>
+            <div class="screen-tile">
+              <h3>세션</h3>
+              <small>상태는 최소한으로 보여 주되, 경고와 잠금은 강하게 떠서 행동을 바로 바꾸게 합니다.</small>
+            </div>
+            <div class="screen-tile">
+              <h3>리포트</h3>
+              <small>점수, 랭킹, 목표, 이벤트 기록을 한 화면에 모아 다음 세션 동기를 만듭니다.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>스타일 메모</h2>
+          <p>
+            검은 배경을 유지하되, 카드 간격과 여백을 넉넉하게 써서 단순히 무거운 앱이 아니라
+            정리된 프리미엄 도구처럼 보이게 합니다. 리포트 숫자는 크게, 설명은 짧게 두는 것이 핵심입니다.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
